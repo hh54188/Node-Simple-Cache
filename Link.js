@@ -111,6 +111,7 @@ function Link() {
             pointer = pointer.next;
         }
         console.log(arr.join(", "));
+        return arr;
     }
 }
 
@@ -119,5 +120,11 @@ exports.createLink = function () {
 }
 
 exports.createNode = function (key) {
-    return new Node(key);  
+    return new Node(key);
 } 
+
+
+// var link = new Link();
+// var node = new Node("key");
+
+// var returnNode = link.unshift(node);

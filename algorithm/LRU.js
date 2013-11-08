@@ -111,11 +111,10 @@ var createCache = function (maxsize) {
             var insertTime = cache[key].insertTime;
             var expire = cache[key].expire;
             var curTime = +new Date();
-            var node = cache[node];
+            var node = cache[key]["node"];
 
             // 如果过期时间存在并且已经过期
             if (expire && curTime - insertTime > expire) {
-
                 queue.del(node);
                 // delete cache[key];
                 cache[key] = null;
@@ -127,3 +126,21 @@ var createCache = function (maxsize) {
 }
 
 exports.createCache = createCache;
+
+
+var cache = createCache();
+var testcases = [
+    {
+        key: "key1",
+        value: "value1",
+        expire: 3000
+    }
+];
+
+testcases.forEach(function (ca) {
+    cache.set(ca.key, ca.value, ca.expire);
+});
+
+setTimeout(function () {
+    console.log(cache.get("key1"));
+}, 4000);

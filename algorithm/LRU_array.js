@@ -99,7 +99,7 @@ var createCache = function (maxsize) {
     var obj =  {
         cache: {},
         queue: [],
-        maxsize: maxsize || 1000,
+        maxsize: maxsize || 100 * 100 * 10,
 
         set: set,
         get: get,
