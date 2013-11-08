@@ -1,0 +1,21 @@
+{
+  "name": "NodeSimpleCacheManage",
+  "version": "0.0.0",
+  "description": "前提有两个，首先你的缓存管理程序是用javascript书写的node.js程序",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/hh54188/NodeSimpleCacheManage.git"
+  },
+  "author": "",
+  "license": "BSD",
+  "readmeFilename": "README.md",
+  "gitHead": "690066e9c9addbc6f27b6cb6efed449923af6f5b",
+  "dependencies": {
+    "mocha": "~1.14.0",
+    "redis": "~0.9.0"
+  }
+}
