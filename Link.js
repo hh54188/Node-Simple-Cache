@@ -77,12 +77,15 @@ function Link() {
         if (prevNode && !nextNode) {
 
             this.tail = prevNode;
-            prevNode = node.next;
+            prevNode.next = node.next;
 
             node.next = this.head;
             this.head.prev = node;
 
             this.head= node;
+            node.prev = null;
+
+            // console.log(prevNode);
 
         // 节点在当中
         } else if (prevNode && nextNode) {
@@ -101,10 +104,13 @@ function Link() {
 
     this.print = function () {
         var pointer = this.head;
+        var arr = [];
+        var conut = 0;
         while (pointer) {
-            console.log(pointer.key);
+            arr.push(pointer.key);
             pointer = pointer.next;
-        }        
+        }
+        console.log(arr.join(", "));
     }
 }
 
@@ -112,6 +118,6 @@ exports.createLink = function () {
     return new Link();  
 }
 
-exports.createNode = function () {
-    return new Node();  
+exports.createNode = function (key) {
+    return new Node(key);  
 } 

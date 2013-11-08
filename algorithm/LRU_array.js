@@ -71,7 +71,7 @@ var get = function (key) {
             for (var i = 0; i < _queue.length; i++) {
                 if (_queue[i] == key) {
                     _queue.slice(i, 1);
-                    delete _cache[key];
+                    _cache[key] = null;
                     break;
                 }
             }
@@ -90,6 +90,10 @@ var clear = function () {
     this.queue = [];
 }
 
+var print = function () {
+    console.log(this.queue.join(", "));
+}
+
 
 var createCache = function (maxsize) {
     var obj =  {
@@ -99,7 +103,8 @@ var createCache = function (maxsize) {
 
         set: set,
         get: get,
-        clear: clear
+        clear: clear,
+        print: print
     }
 
     setInterval(function () {

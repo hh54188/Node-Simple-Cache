@@ -32,7 +32,9 @@ var set = function (key, value, expire) {
 
         while (_queue.length > maxsize) {
             var delNode = _queue.pop();
-            delete _cache[delNode.key];
+            // delete _cache[delNode.key];
+            _cache[delNode.key] = null;
+
         }
 
     }
@@ -76,6 +78,17 @@ var clear = function () {
     this.queue = Link.createLink();
 }
 
+var print = function () {
+    var cache = this.cache;
+    var queue = this.queue;
+    var arr = [];
+    // for (var key in cache) {
+    //     if (!cache[key]) continue;
+    //     arr.push(cache[key].value);
+    // }
+
+    queue.print();
+}
 
 var createCache = function (maxsize) {
     var obj =  {
@@ -85,7 +98,8 @@ var createCache = function (maxsize) {
 
         set: set,
         get: get,
-        clear: clear
+        clear: clear,
+        print: print
     }
 
     setInterval(function () {
@@ -93,6 +107,7 @@ var createCache = function (maxsize) {
         var queue = obj.queue;
 
         for (var key in cache) {
+            if (!cache[key]) continue;
             var insertTime = cache[key].insertTime;
             var expire = cache[key].expire;
             var curTime = +new Date();
@@ -102,7 +117,8 @@ var createCache = function (maxsize) {
             if (expire && curTime - insertTime > expire) {
 
                 queue.del(node);
-                delete cache[key];
+                // delete cache[key];
+                cache[key] = null;
             }            
         }
     }, 1000);
