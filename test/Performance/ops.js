@@ -1,9 +1,9 @@
-var Cache_LRU = require("../../algorithm/LRU");
+var Cache_LRU = require("../../Cache");
 var Cache_LRU_ARR = require("../../algorithm/LRU_array");
 
 
 var testcases = [];
-var maxOp = 100 * 100 * 20;
+var maxOp = 100 * 100 * 10;
 
 for (var i = 0; i < maxOp; i++) {
     testcases.push({
@@ -34,21 +34,6 @@ var batchSet = function (Cache, algo) {
     total = (endTime - startTime) / 1000;
 
     console.log(algo, "| *set* | total cost: " + total + "s", (maxOp / total).toFixed(0) + " o/s");
-}
-
-var batchGetWithoutData = function (Cache, algo) {
-    var cache = Cache.createCache();
-
-    var startTime = +new Date(), total, endTime;
-
-    testcases.forEach(function (ca) {
-        cache.get(ca.key);
-    });
-
-    endTime = +new Date();
-    total = (endTime - startTime) / 1000;
-
-    console.log(algo, "| *get* | total cost: " + total + "s", (maxOp / total).toFixed(0) + " o/s");       
 }
 
 var batchGet = function (Cache, algo) {

@@ -30,6 +30,10 @@ Queue.prototype.del = function (node) {
     this.queue.del(node);
 }
 
+Queue.prototype.print = function (node) {
+    return this.queue.print();
+}
+
 exports.createQueue = function (maxsize) {
     return new Queue(maxsize);
 }

@@ -85,7 +85,8 @@ describe('Single cache', function() {
         for (var i = 0; i < 5; i++) {
             (cache.get("key_" + i, "value_" + i) === null).should.be.true;   
         }
-    })
+    });
 
 })
+
 

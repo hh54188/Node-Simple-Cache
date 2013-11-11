@@ -34,6 +34,9 @@ function Link() {
             this.head = this.tail = node;
         } else {
             this.tail.next = node;
+
+            node.prev = this.tail;
+
             this.tail = node;
         }
     }
@@ -208,6 +211,7 @@ function Link() {
     }
 
     this.moveHead = function (node) {
+
         var prevNode = node.prev;
         var nextNode = node.next;
 
@@ -232,6 +236,7 @@ function Link() {
             nextNode.prev = prevNode;
 
             node.next = this.head;
+            node.prev = null;
             this.head.prev = node;
 
             this.head= node;
@@ -243,8 +248,8 @@ function Link() {
     this.print = function () {
         var pointer = this.head;
         var arr = [];
-        var conut = 0;
         while (pointer) {
+            // console.log(pointer.key);
             arr.push(pointer.key);
             pointer = pointer.next;
         }
