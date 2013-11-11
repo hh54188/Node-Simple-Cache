@@ -75,7 +75,7 @@ CacheManage.set("key", "value", 1000 * 60);
    - 摒弃数组，使用链表
    - 分离出缓存的索引
    - n与logn 与 delete 操作
-   - 
+
 3. 实现最基本的LRU算法
 
 4. LRU算法的局限性(LFU算法的优势)
