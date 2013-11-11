@@ -16,6 +16,7 @@
   "gitHead": "690066e9c9addbc6f27b6cb6efed449923af6f5b",
   "dependencies": {
     "mocha": "~1.14.0",
-    "redis": "~0.9.0"
+    "redis": "~0.9.0",
+    "should": "~2.1.0"
   }
 }
