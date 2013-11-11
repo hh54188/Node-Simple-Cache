@@ -31,6 +31,15 @@ cache.get("key") // value or null
 
 **cache.clear()**
 
+##Manage Mode
+
+If you are not sure which cache replacement algorithm is you need, you can try this model, it will caculate the recently 100 * 100 * 3 `get` hit rate in different algorithm.And according the hit rate choose the higher algorithm one:
+
+```
+var CacheManage = require("./Manage");
+CacheManage.set("key", "value", 1000 * 60);
+```
+
 ------
 
 
