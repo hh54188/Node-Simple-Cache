@@ -19,16 +19,27 @@ for (var i = 0; i < maxOp; i++) {
 var completeFlag = maxOp;
 var startTime = +new Date(), total, endTime;
 
-testcases.forEach(function (ca) {
-    client.set(ca.key, ca.value, function (err, replay) {
-        completeFlag--;
-        if (!completeFlag) {
-            endTime = +new Date();
-            total = (endTime - startTime) / 1000;
-
-            console.log("Redis total cost: " + total + "s", maxOp / total + " o/s");
-            process.exit(code = 0);
+client.on("ready", function (error, replay) {
+    if (!error) {
+        console.log("Redis ready!");
+    }
+    client.flushdb(function (error, replay) {
+        if (!error) {
+            console.log("Redis flush!");
         }
+        testcases.forEach(function (ca) {
+            client.set(ca.key, ca.value, function (err, replay) {
+                completeFlag--;
+                console.log("Set complete------>", maxOp - completeFlag);
+                if (!completeFlag) {
+                    endTime = +new Date();
+                    total = (endTime - startTime) / 1000;
 
-    });
+                    console.log("Redis total cost: " + total + "s", maxOp / total + " o/s");
+                    process.exit();
+                }
+
+            });
+        });
+    })   
 });

@@ -12,7 +12,7 @@ var generateQueue = function (name, maxsize) {
     lastAlgo = name || "LRU";
     lastMaxsize = maxsize;
 
-    var Queue = (name && algorithm[name])? algorithm[name]: LRU;
+    var Queue = algorithm[name];
 
     return Queue.createQueue(maxsize);
 }
@@ -95,6 +95,9 @@ var print = function () {
 }
 
 var createCache = function (alg_name, maxsize) {
+
+    if (!alg_name) alg_name = "LRU";
+    if (!maxsize) maxsize = 100 * 100 * 10;
 
     var obj =  {
         cache: {},
