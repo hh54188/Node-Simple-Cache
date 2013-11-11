@@ -1,3 +1,41 @@
+#How to use
+
+##Init
+
+**Cache.createCache([cache algorithm], [cache size])**
+
+- About cache algorithm: you have two choice "LRU" or "LFU", of course you can add your own algorithm. If you not sure which algorithm, you can choose the following manage mode.
+
+```
+var cache = require("Cache");
+Cache.createCache("LRU", 100 * 100 * 10);
+```
+
+##Set
+
+**cache.set(key, value[, expire(millisecond)])**
+
+```
+cache.set("key", "value", 1000 * 60);
+```
+
+##Get
+
+**cache.get(key)**
+
+```
+cache.get("key") // value or null
+```
+
+##Clear
+
+**cache.clear()**
+
+------
+
+
+
+
 前提有两个，首先你的缓存管理程序是用javascript书写的node.js程序
 
 为什么需要自己写缓存管理，
