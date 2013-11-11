@@ -26,20 +26,21 @@ client.on("ready", function (error, replay) {
     client.flushdb(function (error, replay) {
         if (!error) {
             console.log("Redis flush!");
-        }        
+        }
+
+        var multi = client.multi();
 
         testcases.forEach(function (ca) {
-            client.set(ca.key, ca.value, function (err, replay) {
-                completeFlag--;
-                if (!completeFlag) {
-                    endTime = +new Date();
-                    total = (endTime - startTime) / 1000;
+            multi.set(ca.key, ca.value);
+        });
 
-                    console.log("Redis total cost: " + total + "s", maxOp / total + " o/s");
-                    process.exit();
-                }
+        multi.exec(function (err, replies) {
 
-            });
+            endTime = +new Date();
+            total = (endTime - startTime) / 1000;
+
+            console.log("Redis total cost: " + total + "s", maxOp / total + " o/s");
+            process.exit();            
         });
     })   
 });
