@@ -1,5 +1,6 @@
 function Node (key) {
     this.key = key;
+    this.count = 1; // LFU
     this.next = null;
     this.prev = null;   
 }
@@ -23,6 +24,18 @@ function Link() {
         this.length++;
 
         return node;
+    }
+
+    this.push = function (node) {
+        this.length++;
+
+        // 链表为空
+        if (!this.tail) {
+            this.head = this.tail = node;
+        } else {
+            this.tail.next = node;
+            this.tail = node;
+        }
     }
 
     this.pop = function () {
@@ -67,6 +80,131 @@ function Link() {
         } else if (!prevNode && !nextNode) {
             this.head = this.tail = null;
         }
+    }
+
+    this.forward = function (node) {
+
+        var prevNode = node.prev;
+        var nextNode = node.next;
+
+        if (!prevNode)  return;
+
+        // prevNode是头节点
+        if (!prevNode.prev) {
+
+            // 只有两个节点
+            if (!nextNode) {
+
+                node.prev = null;
+                node.next = prevNode;
+
+                prevNode.prev = node;
+                prevNode.next = null;
+
+                this.tail = prevNode;
+                this.head = node;
+
+            } else {
+
+                nextNode.prev = prevNode;
+
+                prevNode.next = nextNode;               
+                prevNode.prev = node;
+
+                node.next = prevNode;
+                node.prev = null;
+
+                this.head = node;
+            }
+        } else {
+            var prepreNode = prevNode.prev;
+
+            if (!nextNode) {
+                prepreNode.next = node;
+
+                node.next = prevNode;
+                node.prev = prepreNode;
+
+                prevNode.prev = node;
+                prevNode.next = null;
+
+                this.tail = prevNode;
+            } else {
+                prepreNode.next = node;
+
+                node.next = prevNode;
+                node.prev = prepreNode;                
+
+                prevNode.prev = node;
+                prevNode.next = nextNode;
+
+                nextNode.prev = prevNode;                
+            }
+        }
+    }
+
+    this.backward = function (node) {
+        var prevNode = node.prev;
+        var nextNode = node.next;
+
+        if (!nextNode) return;
+
+        if (!nextNode.next) {
+
+            // 只有两个节点
+            if (!prevNode) {
+                nextNode.next = node;
+                nextNode.prev = null;
+
+                node.prev = nextNode;
+                node.next = null;
+
+                this.head = nextNode;
+                this.tail = node;
+            } else {
+                prevNode.next = nextNode;
+
+                nextNode.next = node;
+                nextNode.prev = prevNode;
+
+                node.next = null;
+                node.prev = nextNode;
+
+                this.tail = node;
+            }
+        } else {
+            var nexnexNode = nextNode.next;
+
+            if (!prevNode) {
+                nextNode.next = node;
+                nextNode.prev = null;
+
+                node.next = nexnexNode;
+                node.prev = nextNode;
+
+                nexnexNode.prev = node;
+
+                this.head = nextNode;
+            } else {
+                prevNode.next = nextNode;
+
+                nextNode.next = node;
+                nextNode.prev = prevNode;
+
+                node.next = nexnexNode;
+                node.prev = nextNode;
+
+                nexnexNode.prev = node;                
+            }
+
+        }
+
+
+    }
+
+    this.clear = function () {
+        this.length = 0;
+        this.head = this.tail = null;
     }
 
     this.moveHead = function (node) {

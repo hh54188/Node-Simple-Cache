@@ -1,5 +1,4 @@
-var Cache = require("../../algorithm/LRU");
-// var Cache = require("../../algorithm/LRU_array");
+var Cache = require("../../Cache");
 
 var should = require('should');
 
@@ -20,7 +19,8 @@ describe('Cache ', function() {
 describe('Single cache', function() {
 
     it (' should have set and get method', function(){
-        var cache = Cache.createCache();
+        var cache = Cache.createCache("LRU", 100 * 100 * 10);
+        
         var methods = ["set", "get"];
 
         cache.should.have.properties(methods);
@@ -42,7 +42,7 @@ describe('Single cache', function() {
             }         
         ]
 
-        var cache = Cache.createCache();
+        var cache = Cache.createCache("LRU", 100 * 100 * 10);
 
         testcases.forEach(function (ca) {
             cache.set(ca.key, ca.value);
@@ -55,12 +55,12 @@ describe('Single cache', function() {
 
     it (" can't get value after expire", function (done) {
 
-        var cache = Cache.createCache();
+        var cache = Cache.createCache("LRU", 100 * 100 * 10);
         var testcases = [
             {
                 key: "key1",
                 value: "value1",
-                expire: 3000
+                expire: 1000
             }
         ];
 
@@ -72,12 +72,12 @@ describe('Single cache', function() {
             setTimeout(function () {
                 done();
                 (cache.get(ca.key) === null).should.be.true;
-            }, 3000);
+            }, 1800);
         });
     })
 
     it (" would be abandon after overflow", function () {
-        var cache = Cache.createCache(5);
+        var cache = Cache.createCache("LRU", 5);
         for (var i = 0; i < 10; i++) {
             cache.set("key_" + i, "value_" + i);
         }

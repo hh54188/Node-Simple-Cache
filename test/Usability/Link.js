@@ -4,15 +4,15 @@ var should = require('should');
 var link = null;
 var index = [];
 
-var reset = function () {
-    link = Link.createLink();
-    index = [];
-    for (var i = 0; i < 10; i++) {
-        var node = Link.createNode(i);
-        index.push(node);
-        link.unshift(node);
-    }
-    console.log("------------");
+var reset = function (link) {
+    var arr = [];
+    for (var i = 0; i < 5; i++) {
+        var node = Link.createNode("key_" + i);
+        arr.push(node);
+        link.unshift(node);            
+    }  
+
+    return arr;
 }
 
 describe('Node', function() {
@@ -60,26 +60,50 @@ describe('Link', function() {
     it ("print method should return the key order array", function () {
         var link = Link.createLink();
 
-        for (var i = 0; i < 10; i++) {
-            var node = Link.createNode("key_" + i);
-            link.unshift(node);            
-        }        
+        reset(link);
 
-        link.print().join(", ").should.equal("key_9, key_8, key_7, key_6, key_5, key_4, key_3, key_2, key_1, key_0");
+        link.print().join(", ").should.equal("key_4, key_3, key_2, key_1, key_0");
     });
 
-    it ("movehead method should work fine", function () {
-        var link = null;
+    it ("forward", function () {
+        var link = Link.createLink();
+        var arr = [];
 
-        var reset = function () {
-            link = Link.createLink();
-            for (var i = 0; i < 4; i++) {
-                var node = Link.createNode("key_" + i);
-                link.unshift(node);
-            }               
-        }
+        link.clear();
+        arr = reset(link);
+        link.forward(arr[0]);
+        link.print().join(", ").should.equal("key_4, key_3, key_2, key_0, key_1");
 
-        reset();
-        // TODO
-    })
+
+        link.clear();
+        arr = reset(link);
+        link.forward(arr[1]);
+        link.print().join(", ").should.equal("key_4, key_3, key_1, key_2, key_0");
+
+        link.clear();
+        arr = reset(link);
+        link.forward(arr[2]);
+        link.print().join(", ").should.equal("key_4, key_2, key_3, key_1, key_0");
+    });
+
+    it ("backward", function () {
+        var link = Link.createLink();
+        var arr = [];
+
+        link.clear();
+        arr = reset(link);
+        link.backward(arr[4]);
+        link.print().join(", ").should.equal("key_3, key_4, key_2, key_1, key_0");
+
+
+        link.clear();
+        arr = reset(link);
+        link.backward(arr[3]);
+        link.print().join(", ").should.equal("key_4, key_2, key_3, key_1, key_0");        
+
+        link.clear();
+        arr = reset(link);
+        link.backward(arr[1]);
+        link.print().join(", ").should.equal("key_4, key_3, key_2, key_0, key_1");                
+    });    
 });
