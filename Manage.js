@@ -25,6 +25,7 @@ exports.get = function (key) {
     var value = null;
 
     for (var name in Manage) {
+        Manage[name].total++;
         value = Manage[name].cache.get(key);
         if (value) {
             Manage[name].suc++;
@@ -67,7 +68,6 @@ exports.set = function (key, value, expire) {
 
     for (var name in Manage) {
         Manage[name].cache.set(key, value, expire);
-        Manage[name].total++;
     }
 }
 
