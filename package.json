@@ -1,5 +1,5 @@
 {
-  "name": "NodeSimpleCacheManage",
+  "name": "node-smple-cache",
   "version": "1.0.0",
   "description": "A node.js cache module with liberty custom your algorithm",
   "main": "index.js",
