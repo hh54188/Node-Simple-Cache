@@ -11,7 +11,7 @@ http://qingbob.com/built-cache-management-module-in-nodejs/ (In Simplified Chine
 - About cache algorithm: you have two choice "LRU" or "LFU", of course you can add your own algorithm. If you not sure which algorithm, you can choose the following manage mode.
 
 ```
-var cache = require("Cache");
+var cache = require("node-smple-cache").Cache;
 Cache.createCache("LRU", 100 * 100 * 10);
 ```
 
@@ -40,6 +40,6 @@ cache.get("key") // value or null
 If you are not sure which cache replacement algorithm is you need, you can try this model, it will caculate the recently 100 * 100 * 3 `get` hit rate in different algorithm.And according the hit rate choose the higher algorithm one:
 
 ```
-var CacheManage = require("./Manage");
+var CacheManage = require("node-smple-cache").Manage;
 CacheManage.set("key", "value", 1000 * 60);
 ```
